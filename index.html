@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy Birthday SANA!</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;font-family:'Trebuchet MS',Verdana,sans-serif;color:#fff;overflow-x:hidden}
+body{background:linear-gradient(135deg,#ff6fb5,#8e5cff,#35c8ff);background-size:300% 300%;animation:bg 12s ease infinite}
+@keyframes bg{50%{background-position:100% 50%}}
+canvas{position:fixed;inset:0;pointer-events:none;z-index:50}
+.screen{display:none;min-height:100%;padding:20px 16px 60px;text-align:center;position:relative;z-index:2}
+.screen.on{display:block;animation:fade .6s}
+@keyframes fade{from{opacity:0;transform:scale(.95)}}
+h1{font-size:clamp(2rem,9vw,4.5rem);margin:.3em 0;text-shadow:0 4px 0 #c2185b,0 0 20px #fff}
+.big{font-size:clamp(3rem,16vw,8rem);line-height:1;font-family:'Brush Script MT',cursive;background:linear-gradient(90deg,#fff176,#ff80ab,#fff176);background-size:200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 3s linear infinite,pop 1.2s ease-out;filter:drop-shadow(0 4px 6px rgba(0,0,0,.4))}
+@keyframes shine{to{background-position:200%}}
+@keyframes pop{0%{transform:scale(0) rotate(-20deg)}70%{transform:scale(1.2)}100%{transform:scale(1)}}
+.back{position:fixed;top:10px;left:10px;z-index:60;background:#fff;color:#8e24aa;border:0;border-radius:30px;padding:10px 16px;font-weight:bold;font-size:1rem;box-shadow:0 4px 10px #0004;display:none}
+.pen-row{display:flex;flex-wrap:wrap;justify-content:center;gap:18px;margin-top:20px}
+.pen{background:#ffffff30;border:3px solid #fff;border-radius:28px;padding:14px 18px;width:150px;cursor:pointer;backdrop-filter:blur(4px);transition:.2s}
+.pen:active{transform:scale(.93)}
+.pen .e{font-size:5rem;display:block;animation:bob 1.6s ease-in-out infinite}
+.pen:nth-child(2) .e{animation-delay:.3s}.pen:nth-child(3) .e{animation-delay:.6s}
+@keyframes bob{50%{transform:translateY(-14px) rotate(6deg)}}
+.pen b{display:block;margin-top:6px}
+.frame{position:relative;width:min(280px,75vw);height:min(280px,75vw);margin:18px auto;border-radius:50%;border:8px solid #fff;box-shadow:0 0 0 6px #ffd54f,0 0 40px #fff9;overflow:hidden;background:#ffffff40 center/cover;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;animation:glow 2s infinite alternate}
+@keyframes glow{to{box-shadow:0 0 0 6px #ff80ab,0 0 70px #fff}}
+.card{max-width:640px;margin:16px auto;background:#ffffff2e;border:2px solid #fff8;border-radius:24px;padding:20px;font-size:1.1rem;line-height:1.7;backdrop-filter:blur(6px);text-align:left}
+.cake{font-size:3.4rem;animation:bob 1.4s infinite}
+button.b{background:linear-gradient(#ffeb3b,#ff9800);color:#6a1b9a;border:0;border-radius:30px;padding:14px 26px;font-size:1.15rem;font-weight:bold;box-shadow:0 5px 0 #c66900;margin:8px;cursor:pointer}
+button.b:active{transform:translateY(4px);box-shadow:0 1px 0 #c66900}
+.opt{display:block;width:100%;max-width:420px;margin:10px auto;padding:14px;border-radius:18px;border:3px solid #fff;background:#ffffff30;color:#fff;font-size:1.1rem;font-weight:bold;cursor:pointer;transition:.2s}
+.opt.sel{background:#ff4081;transform:scale(1.04);box-shadow:0 0 25px #fff}
+.bar{height:14px;background:#fff4;border-radius:10px;max-width:420px;margin:10px auto;overflow:hidden}.bar i{display:block;height:100%;background:#ffeb3b;width:0;transition:.4s}
+/* result */
+.pct{font-size:clamp(4rem,22vw,8rem);font-weight:bold;line-height:1;text-shadow:0 5px 0 #c2185b,0 0 30px #fff;animation:pop 1s}
+.row{background:#ffffff26;border-radius:16px;padding:10px 12px;margin:8px 0;font-size:1rem;line-height:1.5}
+.row small{display:block;opacity:.9}
+.stage{position:relative;height:230px;max-width:520px;margin:10px auto}
+.bear{position:absolute;bottom:0;font-size:6.5rem;transition:left 1.6s ease-in-out;line-height:1}
+#b1{left:2%}#b2{left:calc(98% - 6.5rem);transform:scaleX(-1)}
+.stage.hug #b1{left:calc(50% - 5.2rem)}.stage.hug #b2{left:calc(50% - 1.3rem)}
+.miss{font-size:clamp(1.6rem,7vw,3rem);font-weight:bold;opacity:0;transition:.8s;text-shadow:0 0 14px #fff}
+.miss.on{opacity:1;animation:pop 1s}
+.bal{position:fixed;bottom:-120px;font-size:3rem;z-index:1;animation:rise linear forwards;pointer-events:none}
+@keyframes rise{to{transform:translateY(-120vh)}}
+.hint{font-size:.85rem;opacity:.85}
+</style></head><body>
+<canvas id="fx"></canvas>
+<button class="back" id="back" onclick="go('home')">⬅ Back</button>
+
+<!-- ====== HOME ====== -->
+<section class="screen on" id="home">
+  <h1>🎉 Here's a little Surprise! 🎉</h1>
+  <p style="font-size:1.2rem">Tap a penguin 🐧</p>
+  <div class="pen-row">
+    <div class="pen" onclick="go('s1')"><span class="e">🐧</span><b>Open Me!</b></div>
+    <div class="pen" onclick="go('s2')"><span class="e">🐧</span><b>Play a Game (match my guesses and score full)</b></div>
+    <div class="pen" onclick="go('s3')"><span class="e">🐧</span><b>warm hug</b></div>
+  </div>
+</section>
+
+<!-- ====== SCREEN 1 ====== -->
+<section class="screen" id="s1">
+  <div class="cake">🎂 🎈 🎂</div>
+  <div class="big">Happy Birthday BBG!!</div>
+  <h1 id="nameH"></h1>
+  <div class="frame" id="frame1" onclick="pick('photoIn1')"><span>📸 Tap to add photo</span></div>
+  <input type="file" id="photoIn1" accept="image/*" hidden>
+  <div class="card" id="letter"></div>
+  <button class="b" onclick="party()">🎊 More Confetti!</button>
+</section>
+
+<!-- ====== SCREEN 2 ====== -->
+<section class="screen" id="s2">
+  <h1>🎮 Birthday Quiz</h1>
+  <div class="bar"><i id="prog"></i></div>
+  <div id="quiz"></div>
+</section>
+
+<!-- ====== SCREEN 3 ====== -->
+<section class="screen" id="s3">
+  <h1 id="hb3" style="opacity:0">🎈 Happy Birthday! 🎈</h1>
+  <div class="stage" id="stage"><span class="bear" id="b1">🧸</span><span class="bear" id="b2">🧸</span><div id="heart" style="position:absolute;left:0;right:0;top:20px;font-size:3.5rem;opacity:0">💖</div></div>
+  <div class="miss" id="miss">I miss you! 💕</div><br>
+  <button class="b" id="hugBtn" onclick="hug()">🤗 Hug!</button>
+  <p class="hint">Tap the button to make them run and hug</p>
+</section>
+
+<script>
+/* =========================================================
+   ✏️ EDIT THIS PART — your names, photos, message, quiz
+   ========================================================= */
+const CONFIG = {
+  name: "Vaishnawi",                // birthday person's name
+  photo: "myphoto.jpeg",                          // e.g. "photo.jpg" (put the file next to this html). Or leave empty and TAP the circle to pick a photo.
+  message: `THIS DAY IS ALL ABOUT YOU BBG! 🎂 I hope this year brings you endless smiles, sparkling adventures, and every wish you've ever wanted. You make the world brighter just by being in it, and I'm so grateful to have you in my life.ik you can do it ik you will achieve great heights in your life academics and proffesion we are on the stage from where we need to shine and ik you will make it all way to the up and you will achieve everything you once dreamt of  May your day be full of cake, laughter, surprises and love <3. Keep shining, keep dreaming, and never forget how special you are. Happy Birthday SANA, from the bottom of my heart! 💖✨`,
+  // Quiz: q = question, o = options,
+  // guess = the option number (0 = first, 1 = second, 2 = third, 3 = fourth) that YOU expect her to pick.
+  // The game never says right/wrong. At the end it shows how many of her answers match your guesses.
+  quiz: [
+    {q:"It’s Friday night and you have a completely free evening with no obligations. What is the ultimate dream date scenario?", o:["go on a long drive","watch movies","play games cook food and dance","cuddle wrap arms eat alot of food and be in each other arms! 🎉"], guess:3},
+    {q:"Which small daily gesture makes you feel the most appreciated and loved in a relationship?", o:["eye contact","praising you giving attention with passionate eyes ","patting head","kissing you"], guess:1},
+    {q:"It’s a lazy Sunday morning with zero plans.How does the morning naturally start?", o:["cuddling till noon","waking and going on a walk","doomscrolling","its hard to tell"], guess:0},
+    {q:"When it comes to saving money versus treating yourselves to an experience or purchase, what feels like the best approach?", o:["JUST SPEND","think wisely of long term and dont waste much amount","money comes and go","depends on situation"], guess:1},
+    {q:"Who misses you a lot?", o:["Me! 🧸","The teddies","PENGUIN","BLACK NIGGAS 💖"], guess:0}
+  ],
+  // Messages by match percentage (highest first). Edit freely!
+  results: [
+    {min:100, title:"💞 100% MATCH! 💞", text:"HURRAY HURRAY!! 🎉  WE are PURE together, a perfect match made in heaven! WOHOOOO W W W LOVESSS! 🥳💖"},
+    {min:80,  title:"🥰MY BAD So Close!", text:"HURRAY HURRAY!! 🎉 perfect! You know me so well, you're my favourite person! ✨"},
+    {min:60,  title:"😍 Wonderful!", text:"MUAAH!! 🎊  More than half matched, our hearts beat in the same rhythm!! 💕"},
+    {min:40,  title:"😄 Lovely!", text:"TIME TO LAY W ME!! 🎈  Great vibes together, and so much more to knoww🌟"},
+    {min:0,   title:"🤩 Opposites Attract!", text:"HBD DARLING PLAY AGAIN IK WE SAME!! 🥳  Different answers, same big love! That makes us extra special! 💖"}
+  ]
+};
+
+/* ============== helpers ============== */
+const $=id=>document.getElementById(id);
+let AC;
+function tone(f,t=.15,type='sine',v=.2,delay=0){try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.value=f;o.connect(g);g.connect(AC.destination);const s=AC.currentTime+delay;g.gain.setValueAtTime(v,s);g.gain.exponentialRampToValueAtTime(.001,s+t);o.start(s);o.stop(s+t)}catch(e){}}
+function melody(){ // Happy Birthday tune
+  const n=[[264,.3],[264,.15],[297,.45],[264,.45],[352,.45],[330,.9],[264,.3],[264,.15],[297,.45],[264,.45],[396,.45],[352,.9]];
+  let d=0;n.forEach(([f,l])=>{tone(f,l+.1,'triangle',.25,d);d+=l+.05})}
+function pop(){tone(600+Math.random()*500,.12,'square',.08)}
+
+/* ============== confetti + glitter ============== */
+const cv=$('fx'),cx=cv.getContext('2d');let P=[];
+function size(){cv.width=innerWidth;cv.height=innerHeight}size();addEventListener('resize',size);
+const COL=['#ff4081','#ffeb3b','#69f0ae','#40c4ff','#e040fb','#fff','#ffab40'];
+function burst(x,y,n=90){for(let i=0;i<n;i++){const a=Math.random()*6.28,s=3+Math.random()*9;P.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-5,w:6+Math.random()*7,h:4+Math.random()*6,c:COL[Math.random()*7|0],r:Math.random()*6,vr:Math.random()*.4-.2,l:140+Math.random()*80,star:Math.random()<.3})}}
+function rain(n=60){for(let i=0;i<n;i++)P.push({x:Math.random()*cv.width,y:-20-Math.random()*300,vx:Math.random()*2-1,vy:2+Math.random()*3,w:6+Math.random()*6,h:4+Math.random()*5,c:COL[Math.random()*7|0],r:0,vr:.15,l:400,star:Math.random()<.35,g:0})}
+function party(){burst(innerWidth/2,innerHeight/3,150);burst(innerWidth*.2,innerHeight/2);burst(innerWidth*.8,innerHeight/2);rain();pop();pop()}
+function loop(){cx.clearRect(0,0,cv.width,cv.height);
+  P=P.filter(p=>p.l>0&&p.y<cv.height+30);
+  P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.g!==0)p.vy+=.25;p.vx*=.99;p.r+=p.vr;p.l--;cx.save();cx.translate(p.x,p.y);cx.rotate(p.r);cx.fillStyle=p.c;cx.globalAlpha=Math.min(1,p.l/40);
+    if(p.star){cx.font=p.w*2+'px serif';cx.fillText('✦',-p.w,p.w)}else cx.fillRect(-p.w/2,-p.h/2,p.w,p.h);cx.restore()});
+  requestAnimationFrame(loop)}loop();
+// sparkle trail on touch/mouse
+function spark(e){const t=e.touches?e.touches[0]:e;for(let i=0;i<4;i++)P.push({x:t.clientX,y:t.clientY,vx:Math.random()*4-2,vy:Math.random()*4-3,w:5,h:5,c:COL[Math.random()*7|0],r:0,vr:.1,l:40,star:true})}
+addEventListener('pointermove',spark);
+addEventListener('pointerdown',e=>{burst(e.clientX,e.clientY,25);pop()});
+// balloons
+function balloons(n=10){for(let i=0;i<n;i++){const b=document.createElement('div');b.className='bal';b.textContent=['🎈','🎈','🎉','✨','💖'][i%5];b.style.left=Math.random()*95+'%';b.style.animationDuration=5+Math.random()*5+'s';b.style.animationDelay=Math.random()*2+'s';document.body.appendChild(b);setTimeout(()=>b.remove(),12000)}}
+
+/* ============== navigation ============== */
+function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));$(id).classList.add('on');$('back').style.display=id==='home'?'none':'block';scrollTo(0,0);
+  if(id==='s1'){melody();party();balloons()}
+  if(id==='s2')startQuiz();
+  if(id==='s3')resetBears();
+  if(id==='home')pop()}
+
+/* ============== screen 1: photo + message ============== */
+$('nameH').textContent='✨ '+CONFIG.name+' ✨';
+$('letter').textContent=CONFIG.message;
+function setPhoto(src){const f=$('frame1');f.style.backgroundImage=`url("${src}")`;f.innerHTML=''}
+if(CONFIG.photo)setPhoto(CONFIG.photo);
+function pick(id){$(id).click()}
+$('photoIn1').onchange=e=>{const f=e.target.files[0];if(f){const r=new FileReader();r.onload=()=>{setPhoto(r.result);party()};r.readAsDataURL(f)}};
+
+/* ============== screen 2: guess-match quiz ============== */
+let qi=0,ans=[];
+function startQuiz(){qi=0;ans=[];showQ()}
+function showQ(){
+  const box=$('quiz'),N=CONFIG.quiz.length;
+  $('prog').style.width=(qi/N*100)+'%';
+  if(qi>=N){finish();return}
+  const Q=CONFIG.quiz[qi];
+  box.innerHTML=`<div class="card" style="text-align:center;animation:pop .6s"><div class="hint">Question ${qi+1} of ${N}</div><div style="font-size:1.4rem;font-weight:bold;margin:10px 0 14px">${Q.q}</div>${Q.o.map((o,i)=>`<button class="opt" data-i="${i}">${o}</button>`).join('')}</div>`;
+  box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+    const i=+b.dataset.i;ans.push(i);b.classList.add('sel');
+    box.querySelectorAll('.opt').forEach(x=>x.onclick=null);
+    burst(innerWidth/2,innerHeight/2,30);[523,659,784].forEach((f,k)=>tone(f,.15,'triangle',.2,k*.08)); // same sound for every answer, no hint
+    setTimeout(()=>{qi++;showQ()},800)})}
+function finish(){
+  const N=CONFIG.quiz.length;
+  const hits=ans.filter((v,k)=>v===CONFIG.quiz[k].guess).length;
+  const pct=Math.round(hits/N*100);
+  const R=CONFIG.results.find(r=>pct>=r.min)||CONFIG.results[CONFIG.results.length-1];
+  const rows=CONFIG.quiz.map((Q,k)=>{const same=ans[k]===Q.guess;
+    return `<div class="row"><b>${Q.q}</b><small>Your answer: ${Q.o[ans[k]]}</small><small>I guessed: ${Q.o[Q.guess]} ${same?'💖 Matched!':'😜'}</small></div>`}).join('');
+  $('quiz').innerHTML=`<div class="cake">🏆🎂🏆</div><div class="pct">${pct}%</div><div style="font-size:1.1rem">${hits} of ${N} answers matched my guesses</div><h1 style="font-size:clamp(1.8rem,8vw,3rem)">${R.title}</h1><div class="card" style="text-align:center;font-size:1.25rem;font-weight:bold">${R.text}</div><div class="card">${rows}</div><button class="b" onclick="startQuiz()">🔁 Play Again</button>`;
+  $('prog').style.width='100%';
+  party();melody();balloons(pct>=80?16:10);
+  if(pct>=60)setTimeout(party,1200);if(pct===100)setTimeout(party,2400)}
+
+/* ============== screen 3: hugging teddies ============== */
+let hugged=false;
+function resetBears(){hugged=false;$('stage').classList.remove('hug');$('miss').classList.remove('on');$('heart').style.opacity=0;$('hb3').style.opacity=0;$('hugBtn').textContent='🤗 Hug!'}
+function hug(){
+  if(hugged){resetBears();return}
+  hugged=true;$('stage').classList.add('hug');$('hugBtn').textContent='↩ Again';
+  for(let k=0;k<8;k++)tone(300+k*40,.12,'sine',.12,k*.18); // running steps
+  setTimeout(()=>{ // they meet
+    $('heart').style.opacity=1;$('heart').style.animation='pop 1s';
+    $('miss').classList.add('on');
+    const h=$('hb3');h.style.opacity=1;h.style.animation='pop 1.2s';
+    party();melody();balloons(14);
+    const r=$('stage').getBoundingClientRect();burst(r.left+r.width/2,r.top+80,120)},1700)}
+</script>
+</body></html>
